@@ -13,9 +13,9 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Lob
+    @Column(length = 5000)
     private String text;
-    @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn (name = "answer_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "answer_id")
     private Answer answer;
 }
