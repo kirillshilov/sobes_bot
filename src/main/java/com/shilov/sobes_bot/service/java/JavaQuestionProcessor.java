@@ -23,6 +23,9 @@ public class JavaQuestionProcessor implements AbstractJavaQuestionProcessor {
         if (user.getLastQuestion() == null) {
             question = questionService.getNextQuestion(0L);
         }
+        else {
+            question = questionService.getNextQuestion(user.getLastQuestion().getId());
+        }
         user.setLastQuestion(question);
         userService.saveUser(user);
         SendMessage message = new SendMessage();
