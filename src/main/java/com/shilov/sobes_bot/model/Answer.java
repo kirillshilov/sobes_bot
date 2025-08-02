@@ -15,7 +15,7 @@ public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Lob
+    @Column (length = 10000)
     private String text;
     @OneToOne(mappedBy = "answer")
     private Question question;
