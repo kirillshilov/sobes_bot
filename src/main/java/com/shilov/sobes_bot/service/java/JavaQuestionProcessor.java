@@ -18,13 +18,16 @@ public class JavaQuestionProcessor implements AbstractJavaQuestionProcessor {
 
     @Override
     public SendMessage proceed(Update update, Long chatId) {
-        Question question = questionService.getRandomQuestion();
         User user = userService.getUserByIdOrCreateUser(chatId);
+        Question question = null;
+        if (user.getLastQuestion() == null) {
+            question = questionService.getNextQuestion(0L);
+        }
         user.setLastQuestion(question);
         userService.saveUser(user);
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText(question.getText());
+        message.setText("№ " + question.getId() + " : "+ question.getText());
         message.setReplyMarkup(KeyboardFactory.getKeyboardWithQuestion());
         return message;
     }

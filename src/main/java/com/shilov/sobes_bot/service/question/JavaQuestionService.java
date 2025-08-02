@@ -15,13 +15,14 @@ public class JavaQuestionService implements AbstractQuestionService {
     private final QuestionRepository questionRepository;
 
     @Override
-    public Question getRandomQuestion() {
+    public Question getNextQuestion(Long number) {
         long count = questionRepository.count();
         if (count == 0) {
             throw new QuestionException("No question found");
         }
-        Random random = new Random();
-        Long randomId = random.nextLong(count);
-        return questionRepository.findById(randomId).orElseThrow(() -> new QuestionException("repository Exception"));
+        if (number == count || number == 0L) {
+            return questionRepository.findById(1L).orElseThrow(() -> new QuestionException("repository Exception"));
+        }
+        return questionRepository.findById(number + 1).orElseThrow(() -> new QuestionException("repository Exception"));
     }
 }
