@@ -13,6 +13,7 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Lob
     private String text;
     @OneToOne (cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn (name = "answer_id")
