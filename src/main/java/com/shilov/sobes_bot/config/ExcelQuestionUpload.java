@@ -20,7 +20,7 @@ import java.io.IOException;
 @Slf4j
 public class ExcelQuestionUpload {
     private final QuestionRepository questionRepository;
-    private static final String EXCEL_PATH = "/data/data.xlsx";
+    private static final String EXCEL_PATH = "C:\\Users\\sarataza\\IdeaProjects\\sobes_bot\\data\\data.xlsx";
 
     @PostConstruct
     public void init() {

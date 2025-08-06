@@ -25,4 +25,17 @@ public class JavaQuestionService implements AbstractQuestionService {
         }
         return questionRepository.findById(number + 1).orElseThrow(() -> new QuestionException("repository Exception"));
     }
+
+    @Override
+    public Question getQuestionByNumber(Long number) {
+        long count = questionRepository.count();
+        if (count == 0) {
+            throw new QuestionException("No question found");
+        }
+        if (number < 1 || number > count) {
+            throw new QuestionException("Number out of range");
+        }
+        return questionRepository.findById(number).orElseThrow(() -> new QuestionException("repository Exception"));
+    }
+
 }

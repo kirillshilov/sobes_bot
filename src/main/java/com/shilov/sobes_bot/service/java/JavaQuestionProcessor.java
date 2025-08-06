@@ -19,7 +19,7 @@ public class JavaQuestionProcessor implements AbstractJavaQuestionProcessor {
     @Override
     public SendMessage proceed(Update update, Long chatId) {
         User user = userService.getUserByIdOrCreateUser(chatId);
-        Question question = null;
+        Question question;
         if (user.getLastQuestion() == null) {
             question = questionService.getNextQuestion(0L);
         }

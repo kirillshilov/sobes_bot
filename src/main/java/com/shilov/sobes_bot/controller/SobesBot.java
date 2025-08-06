@@ -1,5 +1,6 @@
 package com.shilov.sobes_bot.controller;
 
+import com.shilov.sobes_bot.model.User;
 import com.shilov.sobes_bot.service.UserService;
 import com.shilov.sobes_bot.service.UtilBotService;
 import com.shilov.sobes_bot.config.BotConfig;
@@ -41,7 +42,12 @@ public class SobesBot extends TelegramLongPollingBot {
             throw new RuntimeException("Айди чата отсутствует в сообщении");
         }
         SendMessage message;
-        userService.getUserByIdOrCreateUser(chatId);
+        User user = userService.getUserByIdOrCreateUser(chatId);
+        if (user != null && user.getState() != null && user.getState().equals("/get_question_by_number") && !update.hasCallbackQuery()) {
+            message = processors.get("/get_question_by_number").proceed(update,chatId);
+            sendMessageToUser(message);
+            return;
+        }
         if (!update.hasCallbackQuery()) {
             message = processors.get("java_default").proceed(update,chatId);
             sendMessageToUser(message);
@@ -55,7 +61,6 @@ public class SobesBot extends TelegramLongPollingBot {
         }
         message = processor.proceed(update,chatId);
         sendMessageToUser(message);
-
     }
 
     public void sendMessageToUser(SendMessage sendMessage) {
